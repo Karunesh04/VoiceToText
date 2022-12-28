@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font Awesome -->
+    <script
+      data-search-pseudo-elements
+      src="https://kit.fontawesome.com/f737751420.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- .Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap"
+      rel="stylesheet"
+    />
+    <title>Voice🔄️Text</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .main {
+        background-color: #243763;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+      }
+
+      h1 {
+        font-family: Rubik Bubbles;
+        color: #243763;
+        text-align: center;
+        font-weight: normal;
+        font-size: 3rem;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+        background-color: #eafdfc;
+        padding: 7px;
+        width: fit-content;
+        height: 60vh;
+      }
+      .btn {
+        display: flex;
+        justify-content: center;
+      }
+      .search {
+        border: 1px solid;
+        border-radius: 15px;
+        border-color: #243763;
+        box-shadow: 5px 10px #243763;
+        background-color: #eafdfc;
+        padding: 8px 10px;
+        margin: 8px 30px;
+        cursor: pointer;
+        width: 60px;
+        height: 45px;
+      }
+      #input {
+        border: 2px solid;
+        border-radius: 5px;
+        border-color: #243763;
+        margin: 0 7px;
+        resize: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="container">
+        <h1>
+          Speech <i class="fa-regular fa-arrow-right-arrow-left"></i> Text
+        </h1>
+        <textarea
+          id="input"
+          rows="20"
+          cols="50"
+          placeholder="Speak Something!!!!🎅"
+        ></textarea>
+        <br />
+        <div class="btn">
+          <button class="search" id="rec" type="button" onclick="record()">
+            <i class="fa-regular fa-microphone"></i>
+          </button>
+          <button class="search" id="red" type="button">
+            <i class="fa-regular fa-volume"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const textArea = document.getElementById("input"),
+        read = document.getElementById("red");
+
+      function record() {
+        const voice = new webkitSpeechRecognition();
+        voice.lang = "en-GB";
+        voice.onresult = function (event) {
+          textArea.innerHTML = event.results[0][0].transcript;
+        };
+        voice.start();
+      }
+
+      read.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (textArea.value !== "") {
+          utter(textArea.value);
+        }
+      });
+
+      function utter(text) {
+        const utterThis = new SpeechSynthesisUtterance(text);
+        utterThis.lang = "en-IN";
+        utterThis.pitch = 1.5;
+        speechSynthesis.speak(utterThis);
+      }
+    </script>
+  </body>
+</html>
